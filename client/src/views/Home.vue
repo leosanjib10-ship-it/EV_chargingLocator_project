@@ -69,48 +69,17 @@
         </div>
       </div>
 
+          <!--Maps-->
       <div class="hero-visual">
         <div class="map-glow"></div>
         <div class="map-card">
-          <div class="map-header">
-            <span class="map-title">Live Station Map</span>
-            <span class="live-badge"><span class="pulse-dot"></span> Live</span>
-          </div>
-          <div class="fake-map">
-            <div class="map-pin pin-1" title="Kathmandu - 4/5 free">
-              <div class="pin-icon available">A</div>
-              <div class="pin-label">Kathmandu</div>
-            </div>
-            <div class="map-pin pin-2" title="Pokhara - 2/3 free">
-              <div class="pin-icon busy">B</div>
-              <div class="pin-label">Pokhara</div>
-            </div>
-            <div class="map-pin pin-3" title="Lalitpur - 3/3 free">
-              <div class="pin-icon available">A</div>
-              <div class="pin-label">Lalitpur</div>
-            </div>
-            <div class="map-pin pin-4" title="Bhaktapur - offline">
-              <div class="pin-icon offline">O</div>
-              <div class="pin-label">Bhaktapur</div>
-            </div>
-            <div class="map-pin pin-5" title="Chitwan - 1/2 free">
-              <div class="pin-icon available">A</div>
-              <div class="pin-label">Chitwan</div>
-            </div>
-            <div class="map-roads"></div>
-          </div>
-          <div class="map-legend">
-            <span class="legend-item"><span class="dot available"></span> Available</span>
-            <span class="legend-item"><span class="dot busy"></span> Busy</span>
-            <span class="legend-item"><span class="dot offline"></span> Offline</span>
-          </div>
+          <div id="map" class="real-map"></div>
         </div>
       </div>
     </section>
 
     <!-- How it Works -->
     <section class="how-it-works">
-      <div class="section-label">Simple Process</div>
       <h2 class="section-title">How ChargeNP works</h2>
       <div class="steps">
         <div class="step">
@@ -170,16 +139,26 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import L from 'leaflet'
 import { fetchStations } from '../services/stations.js'
 
 const stats = ref({ stations: 0, ports: 0, cities: 0 })
 
 onMounted(async () => {
+  // Display only the map of Nepal
+  const map = L.map('map').setView([28.3949, 84.1240], 7)
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map)
+
+  // Your existing statistics code
   try {
     const data = await fetchStations({ limit: 100, status: 'active' })
     const stations = data.stations || []
     const cities = new Set(stations.map(s => s.address?.city).filter(Boolean))
     const ports = stations.reduce((sum, s) => sum + (s.liveSummary?.totalPorts || 0), 0)
+
     stats.value = {
       stations: stations.length || 20,
       ports: ports || 60,
@@ -202,7 +181,7 @@ onMounted(async () => {
     radial-gradient(at 50% 0%, rgba(0, 229, 157, 0.05) 0px, transparent 50%),
     radial-gradient(at 0% 100%, rgba(30, 64, 175, 0.05) 0px, transparent 50%);
   color: #0f172a;
-  min-height: 100vh;
+  min-height: 0vh;
 }
 
 /* ── Hero ── */
@@ -211,7 +190,7 @@ onMounted(async () => {
   grid-template-columns: 1.1fr 0.9fr;
   gap: 80px;
   align-items: center;
-  padding: 100px 80px;
+  padding: 20px 80px;
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -404,133 +383,21 @@ onMounted(async () => {
   position: relative;
 }
 
-.map-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
 
-.map-title {
-  font-weight: 700;
-  font-size: 15px;
-}
 
-.live-badge {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(0, 229, 157, 0.15);
-  color: #00e59d;
-  padding: 4px 12px;
+.real-map {
+  width: 100%;
+  height: 350px;
   border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.pulse-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #00e59d;
-  animation: pulse-badge 1.5s infinite;
-}
-
-.fake-map {
-  position: relative;
-  height: 320px;
-  background: linear-gradient(160deg, #0f1a2e 0%, #0d2142 50%, #0a1620 100%);
-  border-radius: 16px;
   overflow: hidden;
-  margin-bottom: 16px;
 }
 
-.map-roads {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, transparent 48%, rgba(255,255,255,0.05) 50%, transparent 52%),
-    linear-gradient(0deg, transparent 48%, rgba(255,255,255,0.05) 50%, transparent 52%),
-    linear-gradient(135deg, transparent 48%, rgba(255,255,255,0.03) 50%, transparent 52%);
-}
-
-.map-pin {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  animation: float 3s ease-in-out infinite;
-}
-
-.pin-1 { top: 30%; left: 45%; animation-delay: 0s; }
-.pin-2 { top: 55%; left: 20%; animation-delay: 0.5s; }
-.pin-3 { top: 40%; left: 60%; animation-delay: 1s; }
-.pin-4 { top: 20%; left: 65%; animation-delay: 1.5s; }
-.pin-5 { top: 70%; left: 55%; animation-delay: 2s; }
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-5px); }
 }
 
-.pin-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 50% 50% 50% 0;
-  transform: rotate(-45deg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  cursor: pointer;
-  transition: transform 0.3s;
-}
-
-.pin-icon span { transform: rotate(45deg); }
-
-.pin-icon.available {
-  background: rgba(0, 229, 157, 0.9);
-  box-shadow: 0 0 20px rgba(0, 229, 157, 0.5);
-}
-
-.pin-icon.busy {
-  background: rgba(239, 68, 68, 0.9);
-  box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
-}
-
-.pin-icon.offline {
-  background: rgba(100, 116, 139, 0.9);
-}
-
-.pin-label {
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 2px 8px;
-  border-radius: 6px;
-  font-size: 10px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.map-legend {
-  display: flex;
-  gap: 16px;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  color: #94a3b8;
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-}
 
 .dot.available { background: #00e59d; }
 .dot.busy { background: #ef4444; }
@@ -545,7 +412,6 @@ onMounted(async () => {
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.how-it-works .section-label,
 .how-it-works .section-title {
   text-align: center;
   color:#000;

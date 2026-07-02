@@ -5,23 +5,16 @@
       <!-- Left Side -->
       <div class="login-info">
         <div class="logo">ChargeNP</div>
-
-        <div class="portal-badge">
-          EV Charging Management System
-        </div>
-
         <h1>Station Owner Portal</h1>
 
         <p>
-          Manage your charging stations, monitor bookings,
-          update pricing and track revenue from a single dashboard.
+          Manage your charging stations,
+          update pricing , Add no of charger, Add Types of Charger etc.
         </p>
 
-        <div class="features">
-          <div>✓ Manage EV Stations</div>
-          <div>✓ Real-Time Monitoring</div>
-          <div>✓ Booking Management</div>
-          <div>✓ Revenue Analytics</div>
+          <div class="info-badges">
+          <div class="badge">Manage EV Stations</div>
+          <div class="badge"> Reviews</div>
         </div>
       </div>
 
@@ -108,8 +101,6 @@
               />
               Remember Me
             </label>
-
-            <a href="#">Forgot Password?</a>
           </div>
 
           <button 
@@ -238,7 +229,7 @@
       </div>
     </div>
 
-    <RouterLink to="/admin-login" class="admin-link">Administrator? Sign in here</RouterLink>
+    <!--<RouterLink to="/admin-login" class="admin-link">Administrator? Sign in here</RouterLink>-->
   </div>
 </template>
 
@@ -360,7 +351,7 @@ const registerOwner = async () => {
   align-items: center;
   gap: 20px;
   padding: 30px;
-  background-color: #080a12;
+  background-color: #ffffff;
   background-image: 
     radial-gradient(at 0% 0%, rgba(0, 229, 157, 0.08) 0px, transparent 50%),
     radial-gradient(at 100% 100%, rgba(6, 61, 51, 0.2) 0px, transparent 50%);
@@ -384,17 +375,13 @@ const registerOwner = async () => {
   grid-template-columns: 1fr 1fr;
   border-radius: 25px;
   overflow: hidden;
-  background: white;
+  background: #111827;
   box-shadow: 0 20px 60px rgba(0,0,0,.25);
 }
 
 .login-info {
   padding: 60px;
-  background: linear-gradient(
-    135deg,
-    #00c17c,
-    #008f5c
-  );
+  background: linear-gradient(135deg, #0d212d, #06111a);
   color: white;
 }
 
@@ -404,14 +391,6 @@ const registerOwner = async () => {
   margin-bottom: 15px;
 }
 
-.portal-badge {
-  display: inline-block;
-  padding: 8px 18px;
-  border-radius: 30px;
-  background: rgba(255,255,255,.2);
-  margin-bottom: 25px;
-  font-size: 14px;
-}
 
 .login-info h1 {
   font-size: 42px;
@@ -423,10 +402,20 @@ const registerOwner = async () => {
   margin-bottom: 30px;
 }
 
-.features {
+.info-badges {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
+  margin-bottom: 60px;
+}
+.badge {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #e2e8f0;
 }
 
 .login-form {
@@ -436,7 +425,7 @@ const registerOwner = async () => {
 .tabs {
   display: flex;
   margin-bottom: 30px;
-  background: #f3f4f6;
+  background: #64748b;
   border-radius: 12px;
   overflow: hidden;
 }
@@ -452,7 +441,7 @@ const registerOwner = async () => {
 
 .tabs button.active {
   background: #00c17c;
-  color: white;
+  color: #0a1a0e;
 }
 
 .alert {

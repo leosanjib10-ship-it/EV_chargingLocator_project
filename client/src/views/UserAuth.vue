@@ -10,7 +10,6 @@
         <p>Join the thousands of EV drivers across Nepal finding Chargers in real-time. Fast, reliable, and always up to date.</p>
         
         <div class="info-badges">
-          <div class="badge">100+ Stations</div>
           <div class="badge">Real-time Live Status</div>
           <div class="badge">Trusted Reviews</div>
         </div>
@@ -170,7 +169,7 @@ const handleSubmit = async () => {
   align-items: center;
   justify-content: center;
   padding: 40px 20px;
-  background-color: #080a12;
+  background-color: #ffffff;
   background-image: 
     radial-gradient(at 0% 0%, rgba(0, 229, 157, 0.05) 0px, transparent 50%),
     radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.05) 0px, transparent 50%);

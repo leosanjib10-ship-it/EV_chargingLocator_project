@@ -80,10 +80,6 @@
           {{stat.icon}}
         </div>
 
-        <h2>
-          {{stat.number}}
-        </h2>
-
         <h4>
           {{stat.title}}
         </h4>
@@ -453,28 +449,24 @@ const statistics = [
 
 {
 icon:"🔋",
-number:"250+",
 title:"Charging Stations",
 desc:"And growing every day"
 },
 
 {
 icon:"🗺",
-number:"77",
 title:"Districts Covered",
 desc:"Across all of Nepal"
 },
 
 {
 icon:"🔌",
-number:"3+",
 title:"Connector Types",
 desc:"CCS2, GB/T, Type 2"
 },
 
 {
 icon:"🕒",
-number:"24/7",
 title:"Real-time Updates",
 desc:"Live availability status"
 }
@@ -719,7 +711,7 @@ p{
   align-items:center;
   justify-content:space-between;
 
-  padding:80px 8% 60px;
+  padding:60px 8% 60px;
 
   background:
   linear-gradient(
@@ -760,15 +752,11 @@ font-weight:600;
 
 
 .hero-left h1{
-
 font-size:52px;
-
 line-height:1.15;
-
 margin:20px 0;
-
 font-weight:800;
-
+color:black;
 }
 
 
@@ -1019,12 +1007,9 @@ color:#0a9b48;
 
 
 .mission-grid{
-
 display:grid;
-
 grid-template-columns:repeat(2,1fr);
-
-gap:20px;
+gap:05px;
 
 }
 
@@ -1032,7 +1017,7 @@ gap:20px;
 
 .info-card{
 
-padding:25px;
+padding:05px;
 
 border-radius:16px;
 
